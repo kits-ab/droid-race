@@ -1,0 +1,11 @@
+{
+	"name": "droid-race",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"private": true,
+	"dependencies": {
+		"alexa-sdk": "1.0.9",
+		"aws-sdk": "2.57.0",
+		"uuid": "3.0.1"
+	}
+}

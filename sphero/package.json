@@ -1,0 +1,14 @@
+{
+	"name": "sphero-aws-iot-connector",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"main": "index.js",
+	"dependencies": {
+		"fs": "0.0.2",
+		"mqtt": "1.8.0",
+		"noble": "1.7.0",
+		"path": "0.12.7",
+		"sphero": "0.9.2",
+		"stdio": "0.2.7"
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"name": "timer",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"fs": "0.0.2",
+		"mqtt": "1.8.0",
+		"onoff": "1.1.2",
+		"stdio": "0.2.7"
+	}
+}

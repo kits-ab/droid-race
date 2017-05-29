@@ -1,0 +1,111 @@
+service: droid-race
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  profile: kits
+  region: eu-west-1
+  environment:
+    IOT_ENDPOINT: "a1mwbl2w3pece2.iot.eu-west-1.amazonaws.com"
+    RACE_SECRET: "secret"
+    RACE_TABLE: "${self:service}-${opt:stage, self:provider.stage}-races"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:Scan
+        - dynamodb:UpdateItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.RACE_TABLE}"
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeStream
+        - dynamodb:GetRecords
+        - dynamodb:GetShardIterator
+        - dynamodb:ListStreams
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.RACE_TABLE}/stream/2017-05-28T06:53:38.585"
+    - Effect: Allow
+      Action: iot:*
+      Resource: "arn:aws:iot:${opt:region, self:provider.region}:*:*"
+
+package:
+  include:
+    - dao/race-dao.js
+
+functions:
+  alexa:
+    handler: functions/alexa.control
+    events:
+      - alexaSkill
+  create:
+    handler: functions/create.create
+    events:
+      - http:
+          path: races
+          method: post
+          cors: true
+  end:
+    handler: functions/end.end
+    events:
+      - http:
+          path: races/end
+          method: post
+          cors: true
+      - iot:
+          sql: "SELECT * FROM '$aws/things/timer/shadow/update/accepted' WHERE state.reported.endSensor = 1"
+          enabled: true
+  list:
+    handler: functions/list.list
+    events:
+      - http:
+          path: races
+          method: get
+          cors: true
+  start:
+    handler: functions/start.start
+    events:
+      - http:
+          path: races/start
+          method: post
+          cors: true
+      - iot:
+          sql: "SELECT * FROM '$aws/things/timer/shadow/update/accepted' WHERE state.reported.startSensor = 1"
+          enabled: true
+  stream:
+    handler: functions/stream.stream
+
+resources:
+  Resources:
+    RaceDynamoDbTable:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: 'NEW_AND_OLD_IMAGES'
+        TableName: "${self:provider.environment.RACE_TABLE}"
+
+    RaceStreamEventSourceMappingDynamoDbTable:
+      Type: AWS::Lambda::EventSourceMapping
+      DependsOn: IamRoleLambdaExecution
+      Properties:
+        BatchSize: 10
+        EventSourceArn:
+          Fn::GetAtt:
+            - RaceDynamoDbTable
+            - StreamArn
+        FunctionName:
+          Fn::GetAtt:
+            - StreamLambdaFunction
+            - Arn
+        StartingPosition: TRIM_HORIZON
+        Enabled: True
