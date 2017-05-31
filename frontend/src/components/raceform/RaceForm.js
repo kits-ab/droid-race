@@ -9,8 +9,10 @@ export default class RaceForm extends React.Component {
 	@observable emailValue = ""
 
 	createRace = () => {
-		this.props.raceStore.createRace(this.nameValue, this.emailValue)
-		this.resetInputValues()
+		if (this.nameValue && this.emailValue) {
+			this.props.raceStore.createRace(this.nameValue, this.emailValue)
+			this.resetInputValues()
+		}
 	}
 
 	@action.bound
@@ -33,12 +35,10 @@ export default class RaceForm extends React.Component {
 		return (
 			<div className="race-form">
 				<div>
-					<label>Namn</label>
-					<input onChange={this.onChangeName} type="text" value={this.nameValue} />
+					<input onChange={this.onChangeName} placeholder="Namn" type="text" value={this.nameValue} />
 				</div>
 				<div>
-					<label>E-post</label>
-					<input onChange={this.onChangeEmail} type="text" value={this.emailValue} />
+					<input onChange={this.onChangeEmail} placeholder="E-post" type="text" value={this.emailValue} />
 				</div>
 				<p><a className="c-button" onClick={this.createRace} type="button">Ny tävlande</a></p>
 			</div>

@@ -1920,7 +1920,7 @@ p {
     cursor: help; }
 
 
-td, th {
+td, th, input {
 font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeueW01-45Ligh", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 font-size: 16px;
 font-style: normal;

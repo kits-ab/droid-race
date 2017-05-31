@@ -1,3 +1,23 @@
 .race-form {
-	margin-bottom: 50px;
+	background-color: #f2f2ee;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	max-width: 350px;
+	margin: -55px 50px 50px 0;
+	padding: 0 15px 10px;
+}
+
+.race-form div:first-child {
+	border-top: 1px solid #c6c4b4;
+	padding-top: 15px;
+}
+
+.race-form input {
+	margin-bottom: 5px;
+	padding: 5px;
+	width: 100%;
+}
+
+.race-form .c-button {
+	margin-top: 10px;
 }

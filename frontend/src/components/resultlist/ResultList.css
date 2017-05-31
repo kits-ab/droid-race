@@ -1,39 +1,43 @@
 .race-list {
-	padding: 30px;
-	border-radius: 10px;
 	margin-bottom: 20px;
 }
 
 .race-list table {
 	table-layout: fixed;
 	width: 100%;
-
 }
 
 .race-list table th {
+	border-bottom: 1px solid #c6c4b4;
 	font-weight: bold;
 	text-align: left;
-	border-bottom: 1px solid #ccc;
 }
 
-.race-list table td,
 .race-list table th {
+	padding: 5px 5px 10px 5px;
+}
+
+.race-list table td {
 	padding: 5px;
-}
-
-.race-list table tr.is-current:first-child td {
-	background-color: rgba(198, 183, 63, 0.32);
-	font-weight: normal;
-	padding-top: 15px;
-	padding-bottom: 15px;
-}
-
-.race-list table tr:nth-child(2) td {
-	font-weight: bold;
-	padding-top: 30px;
 }
 
 .race-list table tr th:last-child,
 .race-list table tr td:last-child {
 	text-align: right;
+}
+
+.race-list table tr:first-child td {
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+.race-list table tr.is-current td {
+	background-color: #f2f2ee;
+	font-weight: normal;
+	padding-bottom: 10px;
+}
+
+.race-list table tr.is-current + tr td {
+	font-weight: bold;
+	padding-top: 20px;
 }
