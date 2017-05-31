@@ -4,7 +4,7 @@ const path = require("path")
 
 module.exports.connect = (endpoint, thingName, initialColor = "white") => {
 	const mqttClient = mqtt.connect({
-		ca: fs.readFileSync(path.join(__dirname, "../../cert", "root.crt")),
+		ca: fs.readFileSync(path.join(__dirname, "../../.cert", "root.crt")),
 		port: 8883,
 		protocol: "mqtts",
 		hostname: endpoint,
