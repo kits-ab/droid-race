@@ -1,2 +1,4 @@
 /backend/.serverless
 /.cert
+node_modules
+build
