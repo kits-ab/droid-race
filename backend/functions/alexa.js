@@ -38,7 +38,7 @@ const handlers = {
 	'AMAZON.HelpIntent': function () {
 		this.emit(':ask',
 			'The available commands are: faster or slower, left or right, hard left or hard right, stop, turn around and finally hyperspeed',
-			'Hey');
+			'Hey')
 	},
 
 	ByeIntent: function () {
@@ -51,7 +51,7 @@ const handlers = {
 			speed = 255
 		}
 		_updateState({ color: _colorFromSpeed(speed), speed })
-			.then(() => { this.emit(':ask', '', 'Hey') });
+			.then(() => { this.emit(':ask', '', 'Hey') })
 	},
 
 	HardLeftIntent: function () {
@@ -60,7 +60,7 @@ const handlers = {
 			direction = 360 + direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Left', 'Hey') });
+			.then(() => { this.emit(':ask', 'Left', 'Hey') })
 	},
 
 	HardRightIntent: function () {
@@ -69,13 +69,13 @@ const handlers = {
 			direction = 360 - direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Right', 'Hey') });
+			.then(() => { this.emit(':ask', 'Right', 'Hey') })
 	},
 
 	HyperSpeedIntent: function () {
 		speed = 255
 		_updateState({ color: _colorFromSpeed(speed), speed })
-			.then(() => { this.emit(':ask', '', 'Hey') });
+			.then(() => { this.emit(':ask', '', 'Hey') })
 	},
 
 	LaunchRequest: function () {
@@ -101,7 +101,7 @@ const handlers = {
 			direction = 360 + direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Left', 'Hey') });
+			.then(() => { this.emit(':ask', 'Left', 'Hey') })
 	},
 
 	OkIntent: function () {
@@ -114,7 +114,7 @@ const handlers = {
 			direction = 360 - direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Right', 'Hey') });
+			.then(() => { this.emit(':ask', 'Right', 'Hey') })
 	},
 
 	SlowerIntent: function () {
@@ -123,7 +123,7 @@ const handlers = {
 			speed = 0;
 		}
 		_updateState({ color: _colorFromSpeed(speed), speed })
-			.then(() => { this.emit(':ask', '', 'Hey') });
+			.then(() => { this.emit(':ask', '', 'Hey') })
 	},
 
 	StopIntent: function () {
@@ -138,11 +138,11 @@ const handlers = {
 			direction = 360 - direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Turning', 'Hey') });
+			.then(() => { this.emit(':ask', 'Turning', 'Hey') })
 	},
 
 	Unhandled: function () {
-		this.emit(':ask', '', 'Hey');
+		this.emit(':ask', '', 'Hey')
 	}
 }
 
