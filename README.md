@@ -16,8 +16,8 @@ There are many parts to getting the whole system up and running and you are prob
 
 The first thing you need to do is to deploy the backend to AWS. Our [blog post](https://kits.se/blogg/2017/02/06/serverless-1/) shows you how to get your account ready and when you've done that you should login to you account, go to **AWS IoT**, go to **Settings** and copy the endpoint address. Go to the file `backend/serverless.yml` and change the `IOT_ENDPOINT` to that address. Now you can deploy the backend:
 
-> cd backend
-> npm install
+> cd backend  
+> npm install  
 > serverless deploy
 
 Notice the endpoint address, this will be used later.
@@ -63,8 +63,8 @@ For the `IOT_ACCESS_KEY_ID` and `IOT_SECRET_ACCESS_KEY` you can use your own key
 
 When you've added the values to the `.env` file (you can ignore `SPHERO_UUID` for now) you are ready to start the frontend: 
 
-> cd frontend
-> npm install
+> cd frontend  
+> npm install  
 > npm start
 
 ### The timer sensors
@@ -103,8 +103,8 @@ The timer is connected to AWS IoT as a thing. So go to AWS IoT and create a thin
 
 Now you are ready to start the timer:
 
-> cd timer
-> npm install
+> cd timer  
+> npm install  
 > npm start
 
 ### Sphero
@@ -113,8 +113,8 @@ Now it's finally time to get the Sphero BB-8 running. It's the same story here, 
 
 Try to start it:
 
-> cd sphero
-> npm install
+> cd sphero  
+> npm install  
 > npm start
 
 You should see a message saying that it connected to MQTT but it will fail to communicate with the BB-8 itself. To fix this you need to find the UUID of the BB-8 and update the `.env` file with this information. Run `npm run discover`, this will try to find all Bluetooth devices and hopefully you will find your BB-8 in the list. Copy the UUID to the `.env` file and run `npm start` again. It should now connect to both MQTT and SPHERO.
@@ -129,17 +129,17 @@ Configure the endpoint by choosing AWS Lambda ARN and choose Europe as the regio
 
 Enable the skill and try the following sequence:
 
-> alexa
-> open droid race
-> forward
-> left
-> hard left
-> right
-> hard right
-> faster
-> slower
-> hyperspeed
-> stop
+> alexa  
+> open droid race  
+> forward  
+> left  
+> hard left  
+> right  
+> hard right  
+> faster  
+> slower  
+> hyperspeed  
+> stop  
 > bye
 
 Hopefully it worked, otherwise it's time to checkout the code.
