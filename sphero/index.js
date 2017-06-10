@@ -1,26 +1,16 @@
-const stdio = require("stdio")
+require("dotenv").config({ path: "../.env" })
 
 const keyboard = require("./lib/keyboard")
 const mqtt = require("./lib/mqtt")
 const sphero = require("./lib/sphero")
 
-const options = stdio.getopt({
-	endpoint: {
-		mandatory: true,
-		args: 1
-	},
-	thingName: {
-		mandatory: true,
-		args: 1
-	},
-	uuid: {
-		mandatory: true,
-		args: 1
-	}
+const mqttClient = mqtt.connect(process.env.IOT_ENDPOINT, "bb-8", () => {
+	mqttClient.publishDesiredState(null)
+	mqttClient.publishReportedState({ color: "white", direction: 0, speed: 0 })
 })
-
-const mqttClient = mqtt.connect(options.endpoint, options.thingName)
-const spheroClient = sphero.connect(options.uuid)
+const spheroClient = sphero.connect(process.env.SPHERO_UUID, 300, () => {
+	spheroClient.setColor("white")
+})
 
 let direction = 0
 const directionIncrement = 45

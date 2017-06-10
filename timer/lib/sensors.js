@@ -1,12 +1,12 @@
-const Gpio = require("onoff").Gpio
+const onoff = require("onoff")
 
 module.exports.init = () => {
 	let isRunning = false
 
-	const startSensor = new Gpio(5, "in", "both")
-	const endSensor = new Gpio(6, "in", "both")
-	const startLed = new Gpio(14, "out")
-	const endLed = new Gpio(15, "out")
+	const startSensor = new onoff.Gpio(5, "in", "both")
+	const endSensor = new onoff.Gpio(6, "in", "both")
+	const startLed = new onoff.Gpio(14, "out")
+	const endLed = new onoff.Gpio(15, "out")
 
 	process.on("SIGINT", () => {
 		startSensor.unexport()
@@ -19,12 +19,9 @@ module.exports.init = () => {
 		startSensor.watch((err, value) => {
 			if (!isRunning && !value) {
 				isRunning = true
-				endLed.writeSync(0)
 				startLed.writeSync(1)
-				callback({
-					startSensor: 1,
-					endSensor: 0
-				})
+				endLed.writeSync(0)
+				callback()
 			}
 		})
 	}
@@ -33,12 +30,9 @@ module.exports.init = () => {
 		endSensor.watch((err, value) => {
 			if (isRunning && !value) {
 				isRunning = false
-				endLed.writeSync(1)
 				startLed.writeSync(0)
-				callback({
-					startSensor: 0,
-					endSensor: 1
-				})
+				endLed.writeSync(1)
+				callback()
 			}
 		})
 	}

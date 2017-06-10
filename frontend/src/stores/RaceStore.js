@@ -2,20 +2,21 @@ import uuid from "uuid"
 import { action, computed, observable } from "mobx"
 import Race from "./Race"
 
-// const raceHeaders = new Headers();
-// raceHeaders.append("RaceSecret", "secret");
-
 export default class RaceStore {
 	@observable races = []
 
 	constructor() {
-		this.apiEndpoint = "https://7cebj10rj3.execute-api.eu-west-1.amazonaws.com/dev"
+		this.apiEndpoint = process.env.API_ENDPOINT
 	}
 
 	@computed get results() {
 		return this.races
 			.filter((r) => r.endTime)
 			.sort((a, b) => a.time - b.time)
+	}
+
+	@computed get top20() {
+		return this.results.slice(0, 20)
 	}
 
 	@computed get currentRace() {

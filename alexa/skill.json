@@ -1,0 +1,98 @@
+{
+	"intents": [
+		{
+			"name": "AMAZON.CancelIntent",
+			"samples": []
+		},
+		{
+			"name": "AMAZON.HelpIntent",
+			"samples": []
+		},
+		{
+			"name": "AMAZON.StopIntent",
+			"samples": []
+		},
+		{
+			"name": "ByeIntent",
+			"samples": [
+				"bye bye"
+			],
+			"slots": []
+		},
+		{
+			"name": "FasterIntent",
+			"samples": [
+				"faster",
+				"forward"
+			],
+			"slots": []
+		},
+		{
+			"name": "HardLeftIntent",
+			"samples": [
+				"turn hard left",
+				"hard left"
+			],
+			"slots": []
+		},
+		{
+			"name": "HardRightIntent",
+			"samples": [
+				"turn hard right",
+				"hard right"
+			],
+			"slots": []
+		},
+		{
+			"name": "HyperSpeedIntent",
+			"samples": [
+				"hyperspeed"
+			],
+			"slots": []
+		},
+		{
+			"name": "LeftIntent",
+			"samples": [
+				"turn left",
+				"left"
+			],
+			"slots": []
+		},
+		{
+			"name": "OkIntent",
+			"samples": [
+				"ok"
+			],
+			"slots": []
+		},
+		{
+			"name": "RightIntent",
+			"samples": [
+				"turn right",
+				"right"
+			],
+			"slots": []
+		},
+		{
+			"name": "SlowerIntent",
+			"samples": [
+				"slower"
+			],
+			"slots": []
+		},
+		{
+			"name": "StopIntent",
+			"samples": [
+				"stop"
+			],
+			"slots": []
+		},
+		{
+			"name": "TurnAroundIntent",
+			"samples": [
+				"turn around"
+			],
+			"slots": []
+		}
+	]
+}

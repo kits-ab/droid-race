@@ -37,7 +37,7 @@ export default class Race {
 
 	@computed get startTimeFormatted() {
 		if (this.startTime) {
-			const t = new Date(this.startTime + 1000*60*60*2) // time zone
+			const t = new Date(this.startTime + 1000 * 60 * 60 * 2) // time zone
 			return t.toISOString().substr(0, 16).replace("T", " ")
 		} else {
 			return null

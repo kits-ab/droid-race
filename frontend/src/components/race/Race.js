@@ -28,7 +28,11 @@ export default class Race extends React.Component {
 
 	componentWillMount() {
 		this.timer = setInterval(() => {
-			this.dummyCounter++
+			if (this.dummyCounter > 0) {
+				this.dummyCounter--
+			} else {
+				this.dummyCounter++
+			}
 		}, 100);
 	}
 

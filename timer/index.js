@@ -1,25 +1,17 @@
-const stdio = require("stdio")
+require("dotenv").config({ path: "../.env" })
+
 const sensors = require("./lib/sensors")
 const mqtt = require("./lib/mqtt")
 
-const options = stdio.getopt({
-	endpoint: {
-		mandatory: true,
-		args: 1
-	},
-	thingName: {
-		mandatory: true,
-		args: 1
-	}
+const mqttClient = mqtt.connect(process.env.IOT_ENDPOINT, "timer", () => {
+	mqttClient.publishReportedState({ startSensor: 0, endSensor: 0 })
 })
-
-const mqttClient = mqtt.connect(options.endpoint, options.thingName)
 const sensorClient = sensors.init()
 
-sensorClient.onStartSensor((data) => {
-	mqttClient.publishReportedState(data)
+sensorClient.onStartSensor(() => {
+	mqttClient.publishReportedState({ startSensor: 1, endSensor: 0 })
 })
 
-sensorClient.onEndSensor((data) => {
-	mqttClient.publishReportedState(data)
+sensorClient.onEndSensor(() => {
+	mqttClient.publishReportedState({ startSensor: 0, endSensor: 1 })
 })

@@ -2,34 +2,23 @@ const fs = require("fs")
 const mqtt = require("mqtt")
 const path = require("path")
 
-module.exports.connect = (endpoint, thingName, initialColor = "white") => {
+module.exports.connect = (endpoint, thingName, callback) => {
 	const mqttClient = mqtt.connect({
 		ca: fs.readFileSync(path.join(__dirname, "../../.cert", "root.crt")),
-		port: 8883,
-		protocol: "mqtts",
-		hostname: endpoint,
 		cert: fs.readFileSync(path.join(__dirname, "../../.cert", thingName, "cert.pem")),
-		key: fs.readFileSync(path.join(__dirname, "../../.cert", thingName, "privkey.pem")),
-		clientId: thingName
+		clientId: thingName,
+		hostname: endpoint,
+		key: fs.readFileSync(path.join(__dirname, "../../.cert", thingName, "private.key")),
+		port: 8883,
+		protocol: "mqtts"
 	})
-
-	const _updateState = (state) => {
-		mqttClient.publish(`$aws/things/${thingName}/shadow/update`, JSON.stringify({ state }))
-	}
 
 	mqttClient.on("connect", () => {
 		console.log("Connected to MQTT")
-
-		_updateState({
-			desired: null,
-			reported: {
-				color: initialColor,
-				direction: 0,
-				speed: 0
-			}
-		})
-
 		mqttClient.subscribe(`$aws/things/${thingName}/shadow/update/delta`)
+		if (callback) {
+			callback()
+		}
 	})
 
 	const onMessage = (callback) => {
@@ -41,15 +30,19 @@ module.exports.connect = (endpoint, thingName, initialColor = "white") => {
 		})
 	}
 
+	const _publishState = (state) => {
+		mqttClient.publish(`$aws/things/${thingName}/shadow/update`, JSON.stringify({ state }))
+	}
+
 	const publishDesiredState = (state) => {
-		if (Object.keys(state).length) {
-			_updateState({ desired: state })
+		if (state === null || Object.keys(state).length) {
+			_publishState({ desired: state })
 		}
 	}
 
 	const publishReportedState = (state) => {
 		if (Object.keys(state).length) {
-			_updateState({ reported: state })
+			_publishState({ reported: state })
 		}
 	}
 

@@ -7,7 +7,6 @@ provider:
   region: eu-west-1
   environment:
     IOT_ENDPOINT: "a1mwbl2w3pece2.iot.eu-west-1.amazonaws.com"
-    RACE_SECRET: "secret"
     RACE_TABLE: "${self:service}-${opt:stage, self:provider.stage}-races"
   iamRoleStatements:
     - Effect: Allow
@@ -46,10 +45,6 @@ functions:
   end:
     handler: functions/end.end
     events:
-      - http:
-          path: races/end
-          method: post
-          cors: true
       - iot:
           sql: "SELECT * FROM '$aws/things/timer/shadow/update/accepted' WHERE state.reported.endSensor = 1"
           enabled: true
@@ -63,10 +58,6 @@ functions:
   start:
     handler: functions/start.start
     events:
-      - http:
-          path: races/start
-          method: post
-          cors: true
       - iot:
           sql: "SELECT * FROM '$aws/things/timer/shadow/update/accepted' WHERE state.reported.startSensor = 1"
           enabled: true
@@ -91,7 +82,7 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         StreamSpecification:
-          StreamViewType: 'NEW_AND_OLD_IMAGES'
+          StreamViewType: "NEW_AND_OLD_IMAGES"
         TableName: "${self:provider.environment.RACE_TABLE}"
 
     RaceStreamEventSourceMappingDynamoDbTable:

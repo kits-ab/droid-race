@@ -5,7 +5,7 @@ const iotData = new aws.IotData({ endpoint: process.env.IOT_ENDPOINT })
 
 const _updateState = (state) => {
 	const params = {
-		thingName: 'bb-8',
+		thingName: "bb-8",
 		payload: JSON.stringify({ state: { desired: state } })
 	}
 	return new Promise((resolve, reject) => {
@@ -35,14 +35,14 @@ const _colorFromSpeed = (speed) => {
 }
 
 const handlers = {
-	'AMAZON.HelpIntent': function () {
-		this.emit(':ask',
-			'The available commands are: faster or slower, left or right, hard left or hard right, stop, turn around and finally hyperspeed',
-			'Hey')
+	"AMAZON.HelpIntent": function () {
+		this.emit(":ask",
+			"The available commands are: faster or slower, left or right, hard left or hard right, stop, turn around and finally hyperspeed",
+			"Hey")
 	},
 
 	ByeIntent: function () {
-		this.emit(':tell', 'Bye bye. May the force be with you')
+		this.emit(":tell", "Bye bye. May the force be with you")
 	},
 
 	FasterIntent: function () {
@@ -51,7 +51,7 @@ const handlers = {
 			speed = 255
 		}
 		_updateState({ color: _colorFromSpeed(speed), speed })
-			.then(() => { this.emit(':ask', '', 'Hey') })
+			.then(() => { this.emit(":ask", "", "Hey") })
 	},
 
 	HardLeftIntent: function () {
@@ -60,7 +60,7 @@ const handlers = {
 			direction = 360 + direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Left', 'Hey') })
+			.then(() => { this.emit(":ask", "Left", "Hey") })
 	},
 
 	HardRightIntent: function () {
@@ -69,13 +69,13 @@ const handlers = {
 			direction = 360 - direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Right', 'Hey') })
+			.then(() => { this.emit(":ask", "Right", "Hey") })
 	},
 
 	HyperSpeedIntent: function () {
 		speed = 255
 		_updateState({ color: _colorFromSpeed(speed), speed })
-			.then(() => { this.emit(':ask', '', 'Hey') })
+			.then(() => { this.emit(":ask", "", "Hey") })
 	},
 
 	LaunchRequest: function () {
@@ -85,13 +85,13 @@ const handlers = {
 		_updateState({ color: "white", direction, speed })
 			.then(() => raceDao.list(process.env.RACE_TABLE))
 			.then(races => {
-				let name = 'unknown'
+				let name = "unknown"
 				if (races && races.length) {
 					name = races[0].name
 				}
 				this.attributes.speechOutput = `Welcome to Droid Race ${name}!`
-				this.attributes.repromptSpeech = 'For instructions on what you can say, please say help me.'
-				this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptSpeech)
+				this.attributes.repromptSpeech = "For instructions on what you can say, please say help me."
+				this.emit(":ask", this.attributes.speechOutput, this.attributes.repromptSpeech)
 			})
 	},
 
@@ -101,11 +101,11 @@ const handlers = {
 			direction = 360 + direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Left', 'Hey') })
+			.then(() => { this.emit(":ask", "Left", "Hey") })
 	},
 
 	OkIntent: function () {
-		this.emit(':ask', '', 'Hey')
+		this.emit(":ask", "", "Hey")
 	},
 
 	RightIntent: function () {
@@ -114,22 +114,22 @@ const handlers = {
 			direction = 360 - direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Right', 'Hey') })
+			.then(() => { this.emit(":ask", "Right", "Hey") })
 	},
 
 	SlowerIntent: function () {
 		speed -= speedIncrement
 		if (speed < 0) {
-			speed = 0;
+			speed = 0
 		}
 		_updateState({ color: _colorFromSpeed(speed), speed })
-			.then(() => { this.emit(':ask', '', 'Hey') })
+			.then(() => { this.emit(":ask", "", "Hey") })
 	},
 
 	StopIntent: function () {
 		speed = 0
 		_updateState({ color: "white", speed })
-			.then(() => { this.emit(':ask', 'Stopping', 'Hey') })
+			.then(() => { this.emit(":ask", "Stopping", "Hey") })
 	},
 
 	TurnAroundIntent: function () {
@@ -138,11 +138,11 @@ const handlers = {
 			direction = 360 - direction
 		}
 		_updateState({ direction })
-			.then(() => { this.emit(':ask', 'Turning', 'Hey') })
+			.then(() => { this.emit(":ask", "Turning", "Hey") })
 	},
 
 	Unhandled: function () {
-		this.emit(':ask', '', 'Hey')
+		this.emit(":ask", "", "Hey")
 	}
 }
 

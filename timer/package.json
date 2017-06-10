@@ -1,11 +1,15 @@
 {
-	"name": "timer",
+	"name": "@kokitotsos/timer",
 	"version": "1.0.0",
 	"license": "Apache-2.0",
+	"main": "index.js",
+	"private": true,
+	"scripts": {
+		"start": "node index.js"
+	},
 	"dependencies": {
-		"fs": "0.0.2",
-		"mqtt": "1.8.0",
-		"onoff": "1.1.2",
-		"stdio": "0.2.7"
+		"dotenv": "^4.0.0",
+		"mqtt": "^2.8.2",
+		"onoff": "^1.1.2"
 	}
 }

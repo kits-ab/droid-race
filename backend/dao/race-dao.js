@@ -7,7 +7,7 @@ module.exports.create = (raceTable, race) => {
 		TableName: raceTable,
 		Item: race
 	}
-	console.log('Creating', { race })
+	console.log("Creating", { race })
 	return new Promise((resolve, reject) => {
 		ddb.put(params, (error) => {
 			if (error) {
@@ -35,7 +35,7 @@ module.exports.end = (raceTable, endTime) => {
 				UpdateExpression: "SET #raceEndTime = :s",
 				ReturnValues: "ALL_NEW"
 			}
-			console.log('Ending', { raceId: races[0].id, endTime })
+			console.log("Ending", { raceId: races[0].id, endTime })
 			return new Promise((resolve, reject) => {
 				ddb.update(params, (error) => {
 					if (error) {
@@ -79,7 +79,7 @@ module.exports.start = (raceTable, startTime) => {
 				UpdateExpression: "SET #raceStartTime = :s",
 				ReturnValues: "ALL_NEW"
 			}
-			console.log('Starting', { raceId: races[0].id, startTime })
+			console.log("Starting", { raceId: races[0].id, startTime })
 			return new Promise((resolve, reject) => {
 				ddb.update(params, (error) => {
 					if (error) {

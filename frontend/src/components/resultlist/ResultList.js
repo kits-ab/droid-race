@@ -1,7 +1,7 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import "./ResultList.css"
 import Result from "../result/Result"
+import "./ResultList.css"
 
 @inject("raceStore") @observer
 export default class ResultList extends React.Component {
@@ -32,7 +32,7 @@ export default class ResultList extends React.Component {
 					<tbody>
 						{ raceStore.races.length > 0 && raceStore.races[0].endTime ?
 							<Result race={raceStore.races[0]} key="lastRace" current /> : null }
-						{ raceStore.results.map(race => <Result race={race} key={race.id} />) }
+						{ raceStore.top20.map(race => <Result race={race} key={race.id} />) }
 					</tbody>
 				</table>
 			</div>

@@ -1,19 +1,19 @@
 import AWSMqtt from "aws-mqtt-client"
 import React from "react"
-import "./App.css"
-import Race from "./components/race"
-import ResultList from "./components/resultlist"
-import RaceForm from "./components/raceform"
 import { inject, observer } from "mobx-react"
+import Race from "./components/race/Race"
+import ResultList from "./components/resultlist/ResultList"
+import RaceForm from "./components/raceform/RaceForm"
+import "./App.css"
 
 @inject("raceStore") @observer
 export default class App extends React.Component {
 
 	componentWillMount() {
 		const mqttClient = new AWSMqtt({
-			accessKeyId: 'AKIAJLFUF2J6ZMMPZKXA',
-			secretAccessKey: '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',
-			endpointAddress: 'a1mwbl2w3pece2.iot.eu-west-1.amazonaws.com',
+			accessKeyId: process.env.IOT_ACCESS_KEY_ID,
+			secretAccessKey: process.env.IOT_SECRET_ACCESS_KEY,
+			endpointAddress: process.env.IOT_ENDPOINT,
 			region: 'eu-west-1'
 		});
 
